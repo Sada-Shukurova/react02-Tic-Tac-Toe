@@ -1,11 +1,34 @@
 import { useState } from "react";
 import GameBoard from "./components/GameBoard";
 import Player from "./components/Player";
+import Log from "./components/Log";
+
+function deriveActivePlayer(gameTurns) {
+  let currentPlayer = "X";
+  if (gameTurns.length > 0 && gameTurns[0].player === "X") {
+    currentPlayer = "O";
+  }
+  return currentPlayer;
+}
 
 function App() {
-  const [activePlayer, setActivePlayer] = useState("X");
-  function onSelectSquare() {
-    setActivePlayer((curr) => (curr === "X" ? "O" : "X"));
+  const [gameTurns, setGameTurns] = useState([]);
+  // const [activePlayer, setActivePlayer] = useState("X");
+
+  const activePlayer = deriveActivePlayer(gameTurns);
+  function onSelectSquare(rowIndex, colIndex) {
+    //setActivePlayer((curr) => (curr === "X" ? "O" : "X"));
+    setGameTurns((prevTurns) => {
+      const currentPlayer = deriveActivePlayer(prevTurns);
+      // let currentPlayer = "X";
+      // if (prevTurns.length > 0 && prevTurns[0].player === "X") {
+      //   currentPlayer = "O";
+      const updatedTurns = [
+        { square: { row: rowIndex, col: colIndex }, player: currentPlayer },
+        ...prevTurns,
+      ];
+      return updatedTurns;
+    });
   }
   return (
     <main>
@@ -22,12 +45,9 @@ function App() {
             isActive={activePlayer === "O"}
           />
         </ol>
-        <GameBoard
-          activePlayer={activePlayer}
-          onSelectSquare={onSelectSquare}
-        />
+        <GameBoard turns={gameTurns} onSelectSquare={onSelectSquare} />
       </div>
-      LOG
+      <Log turns={gameTurns} />
     </main>
   );
 }
