@@ -55,7 +55,13 @@ h1 {
   margin: 3rem auto;
   padding: 2rem;
   border-radius: 6px;
-  background: linear-gradient(#383624, #282617);
+  background: rgb(45, 82, 82);
+  background: linear-gradient(
+    131deg,
+    rgba(45, 82, 82, 1) 0%,
+    rgba(69, 74, 55, 1) 50%,
+    rgba(191, 193, 151, 1) 100%
+  );
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
   position: relative;
 }
